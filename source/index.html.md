@@ -28,7 +28,7 @@ Remember to replace all instances of <code>localhost:4567</code> in the code exa
 > To grab an authentication token, use this code:
 
 ```shell
-curl "/api/auth" -G
+curl "http://localhost:4567/api/auth" -G
   -d "password=YOUR_PASSWORD"
 ```
 
