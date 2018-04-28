@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,8 +212,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
@@ -225,19 +223,21 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="kittens">Kittens</a>
+            <a href="#authentication-auth" class="toc-h1 toc-link" data-title="authentication-code-auth-code">Authentication <code>/auth</code></a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="get-all-kittens">Get All Kittens</a>
+                    <a href="#verifying-auth-tokens-test_auth" class="toc-h2 toc-link" data-title="verifying-auth-tokens-code-test_auth-code">Verifying Auth Tokens <code>/test_auth</code></a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#manga" class="toc-h1 toc-link" data-title="manga">Manga</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#library-manga-library" class="toc-h2 toc-link" data-title="library-manga-code-library-code">Library manga <code>/library</code></a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="get-a-specific-kitten">Get a Specific Kitten</a>
-                  </li>
-                  <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="delete-a-specific-kitten">Delete a Specific Kitten</a>
+                    <a href="#thumbnail-images-cover" class="toc-h2 toc-link" data-title="thumbnail-images-code-cover-code">Thumbnail images <code>/cover</code></a>
                   </li>
               </ul>
           </li>
@@ -254,249 +254,291 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
+<p>Welcome to the TachiWeb API! You can use the API to perform actions and get information on/from your Tachiyomi library.</p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Remember to replace all instances of <code>localhost:4567</code> in the code examples with whereever your server is actually running
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h1 id='authentication-auth'>Authentication <code>/auth</code></h1>
+<blockquote>
+<p>To grab an authentication token, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"/api/auth"</span> -G
+  -d <span class="s2">"password=YOUR_PASSWORD"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Auth</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// You can actually just ignore the result, more on this later</span>
+    <span class="kd">var</span> <span class="nx">apiToken</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">token</span><span class="p">;</span> 
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"My API token is: "</span> <span class="o">+</span> <span class="nx">apiToken</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Authentication failed!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">password</span><span class="p">:</span> <span class="s2">"YOUR_PASSWORD"</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Make sure to replace <code>YOUR_PASSWORD</code> with the user&#39;s password.</p>
+</blockquote>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<p>Almost every endpoint in the TachiWeb API requires authentication (if the user set a password). To authenticate, you must first obtain an authentication token. Then you must provide the authentication token when performing your API requests. <strong>You do not need a session token if the user set no password.</strong></p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<aside class="notice">
+Authentication tokens <b>regularly</b> expire (without notice)! Always ensure that your code is able to handle errors thrown when authentication fails! Alternatively, you can just verify your authentication token before every request to ensure you never call the API with an invalid auth token.
+</aside>
+
+<p>TachiWeb expects for the token to be included in all API requests to the server if a password is set. You can do this in two ways:</p>
+
+<ol>
+<li>Pass it in the <code>TW-Session</code> header, example: <code>TW-Session: 5ujo4i8dvqj84jgt8picvh0sif</code></li>
+<li>Provide a <code>session</code> cookie. Example header with session cookie: <code>Cookie: session=5ujo4i8dvqj84jgt8picvh0sif;</code>. <strong>This should be the default choice when using the JavaScript client as calling <code>TWApi.Commands.Auth.execute</code> will automatically set the session cookie if authentication was successful!</strong></li>
+</ol>
+
+<blockquote>
+<p>Example code that passes the authentication token:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/your-operation"</span>
+    -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">Do</span> <span class="nx">nothing</span><span class="o">!</span> <span class="nx">After</span> <span class="nx">you</span> <span class="nx">call</span><span class="p">:</span>
+
+<span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Auth</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="na">password</span><span class="p">:</span> <span class="s2">"YOUR_PASSWORD"</span> <span class="p">});</span>
+
+<span class="nx">the</span> <span class="nx">resulting</span> <span class="nx">API</span> <span class="nx">key</span> <span class="nx">is</span> <span class="nx">automatically</span> <span class="nx">passed</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">server</span> <span class="nx">on</span> <span class="nx">future</span> <span class="nx">queries</span><span class="p">.</span>
+</code></pre>
+<blockquote>
+<p>Remember to replace <code>5ujo4i8dvqj84jgt8picvh0sif</code> with your auth token!</p>
+</blockquote>
+<h2 id='verifying-auth-tokens-test_auth'>Verifying Auth Tokens <code>/test_auth</code></h2>
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/test_auth"</span>
+    -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not currently implemented in the JavaScript client</span>
+</code></pre>
+<p>You can test auth tokens using this endpoint.</p>
+<h1 id='manga'>Manga</h1><h2 id='library-manga-library'>Library manga <code>/library</code></h2>
+<blockquote>
+<p>Sample code to get manga in library:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/library"</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Library</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Result: "</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get library!"</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">List</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">library</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"chapters"</span><span class="p">:</span><span class="w"> </span><span class="mi">522</span><span class="p">,</span><span class="w">                          </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">manga</span><span class="w">
+            </span><span class="s2">"unread"</span><span class="p">:</span><span class="w"> </span><span class="mi">522</span><span class="p">,</span><span class="w">                            </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">unread</span><span class="w"> </span><span class="err">chapters</span><span class="w">
+            </span><span class="s2">"artist"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lee Gwang Su"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Son Jae ho"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"flags"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"DISPLAY_MODE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAME"</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">Display</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">'NAME's</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">'NUMBER's</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga?</span><span class="w">
+                </span><span class="s2">"READ_FILTER"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL"</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">Show</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">'READ'</span><span class="p">,</span><span class="w"> </span><span class="err">'UNREAD'</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">'ALL'</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga?</span><span class="w">
+                </span><span class="s2">"SORT_DIRECTION"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESCENDING"</span><span class="p">,</span><span class="w">       </span><span class="err">//</span><span class="w"> </span><span class="err">Sort</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">'ASCENDING'</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">'DESCENDING'?</span><span class="w">
+                </span><span class="s2">"SORT_TYPE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SOURCE"</span><span class="p">,</span><span class="w">                </span><span class="err">//</span><span class="w"> </span><span class="err">Sort</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">'SOURCE'</span><span class="w"> </span><span class="err">order</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">'NUMBER's?</span><span class="w">
+                </span><span class="s2">"DOWNLOADED_FILTER"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL"</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">Show</span><span class="w"> </span><span class="err">only</span><span class="w"> </span><span class="err">'DOWNLOADED'</span><span class="p">,</span><span class="w"> </span><span class="err">'NOT_DOWNLOADED'</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">'ALL'</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga?</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lorem ipsum stuff..."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ReadMangaToday"</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">source</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">belongs</span><span class="w"> </span><span class="err">to</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Noblesse"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.readmng.com/uploads/posters/0001_7.jpg"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"downloaded"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                      </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">some</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">downloaded?</span><span class="w">
+            </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.readmng.com/noblesse"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"genres"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action, Adventure, Comedy, School Life, Shounen, Supernatural"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">                                  </span><span class="err">//</span><span class="w"> </span><span class="err">Internal</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w">
+            </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">                           </span><span class="err">//</span><span class="w"> </span><span class="err">List</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">categories</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">in</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">                          </span><span class="err">//</span><span class="w"> </span><span class="err">Internal</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">category</span><span class="w">
+                    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cool stuff!"</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">category</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"favorite"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">                         </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">favorited</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ongoing"</span><span class="w">                       </span><span class="err">//</span><span class="w"> </span><span class="err">Either</span><span class="w"> </span><span class="err">'Ongoing'</span><span class="p">,</span><span class="w"> </span><span class="err">'Completed'</span><span class="p">,</span><span class="w"> </span><span class="err">'Licensed'</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">'Unknown'</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
+<p>This endpoint fetches all manga in the user&#39;s library</p>
+<h2 id='thumbnail-images-cover'>Thumbnail images <code>/cover</code></h2>
+<p>Use this endpoint to grab the thumbnail image of a manga</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA"</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// It is not recommended you use JS to fetch the image</span>
+<span class="c1">// Instead, just set the src attribute of an img element to:</span>
+<span class="c1">// http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA</span>
+
+<span class="c1">// Code for those who still want to fetch the image manually:</span>
+<span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Cover</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Could not fetch thumbnail!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Process the raw XMLHttpRequest object here</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Remember to replace <code>INTERNAL_ID_OF_MANGA</code> with the internal ID of the manga you wish to fetch the thumbnail of</p>
+</blockquote>
+
+<!--
+### HTTP Request
+
+`GET http://example.com/api/kittens`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+include_cats | false | If set to true, the result will also include cats.
+available | true | If set to false, the result will include kittens that have already been adopted.
 
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+## Get a Specific Kitten
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+```ruby
+require 'kittn'
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```shell
+curl "http://example.com/api/kittens/2"
+  -H "Authorization: meowmeowmeow"
+```
+
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+let max = api.kittens.get(2);
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "name": "Max",
+  "breed": "unknown",
+  "fluffiness": 5,
+  "cuteness": 10
+}
+```
+
+This endpoint retrieves a specific kitten.
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+### HTTP Request
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
+`GET http://example.com/kittens/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the kitten to retrieve
+
+## Delete a Specific Kitten
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.delete(2)
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.delete(2)
+```
+
+```shell
+curl "http://example.com/api/kittens/2"
   -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+  -H "Authorization: meowmeowmeow"
+```
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
+```javascript
+const kittn = require('kittn');
+
+let api = kittn.authorize('meowmeowmeow');
+let max = api.kittens.delete(2);
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 2,
+  "deleted" : ":("
+}
+```
+
+This endpoint deletes a specific kitten.
+
+### HTTP Request
+
+`DELETE http://example.com/kittens/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the kitten to delete
+-->
 <h1 id='errors'>Errors</h1>
+<!--
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
 </aside>
 
-<p>The Kittn API uses the following error codes:</p>
+The Kittn API uses the following error codes:
 
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
-</tr>
-</tbody></table>
+
+Error Code | Meaning
+---------- | -------
+400 | Bad Request -- Your request is invalid.
+401 | Unauthorized -- Your API key is wrong.
+403 | Forbidden -- The kitten requested is hidden for administrators only.
+404 | Not Found -- The specified kitten could not be found.
+405 | Method Not Allowed -- You tried to access a kitten with an invalid method.
+406 | Not Acceptable -- You requested a format that isn't json.
+410 | Gone -- The kitten requested has been removed from our servers.
+418 | I'm a teapot.
+429 | Too Many Requests -- You're requesting too many kittens! Slow down!
+500 | Internal Server Error -- We had a problem with our server. Try again later.
+503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later. -->
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
                 <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
