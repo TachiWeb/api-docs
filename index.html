@@ -263,7 +263,7 @@ Remember to replace all instances of <code>localhost:4567</code> in the code exa
 <blockquote>
 <p>To grab an authentication token, use this code:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"/api/auth"</span> -G
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/auth"</span> -G
   -d <span class="s2">"password=YOUR_PASSWORD"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Auth</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// You can actually just ignore the result, more on this later</span>
