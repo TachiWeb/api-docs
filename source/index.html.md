@@ -23,7 +23,7 @@ Welcome to the TachiWeb API! You can use the API to perform actions and get info
 Remember to replace all instances of <code>localhost:4567</code> in the code examples with whereever your server is actually running
 </aside>
 
-# Authentication `/auth`
+# Authentication `GET /auth`
 
 > To grab an authentication token, use this code:
 
@@ -74,7 +74,7 @@ the resulting API key is automatically passed to the server on future queries.
 
 > Remember to replace `5ujo4i8dvqj84jgt8picvh0sif` with your auth token!
 
-## Verifying Auth Tokens `/test_auth`
+## Verifying Auth Tokens `GET /test_auth`
 
 > Code examples:
 
@@ -175,6 +175,24 @@ TWApi.Commands.Cover.execute(null, function() {
 });
 ```
 > Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga you wish to fetch the thumbnail of
+
+## Toggle favorite status `/fave`
+
+Use this endpoint to change the favorite status of a manga (whether or not it should be visible in the library).
+
+```shell
+curl "http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+  -d
+```
+
+> Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga you wish to fetch the thumbnail of
+
+### Query parameters
+
+| Parameter | Type    | Default | Description                                                                    |
+|-----------|---------|---------|--------------------------------------------------------------------------------|
+| fave      | Boolean | NONE    | If set to true, manga will be favorited, otherwise manga will be un-favorited. |
 
 <!--
 ### HTTP Request
