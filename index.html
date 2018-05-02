@@ -223,10 +223,10 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication-auth" class="toc-h1 toc-link" data-title="authentication-code-auth-code">Authentication <code>/auth</code></a>
+            <a href="#authentication-get-auth" class="toc-h1 toc-link" data-title="authentication-code-get-auth-code">Authentication <code>GET /auth</code></a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#verifying-auth-tokens-test_auth" class="toc-h2 toc-link" data-title="verifying-auth-tokens-code-test_auth-code">Verifying Auth Tokens <code>/test_auth</code></a>
+                    <a href="#verifying-auth-tokens-get-test_auth" class="toc-h2 toc-link" data-title="verifying-auth-tokens-code-get-test_auth-code">Verifying Auth Tokens <code>GET /test_auth</code></a>
                   </li>
               </ul>
           </li>
@@ -234,10 +234,25 @@
             <a href="#manga" class="toc-h1 toc-link" data-title="manga">Manga</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#library-manga-library" class="toc-h2 toc-link" data-title="library-manga-code-library-code">Library manga <code>/library</code></a>
+                    <a href="#library-manga-get-library" class="toc-h2 toc-link" data-title="library-manga-code-get-library-code">Library manga <code>GET /library</code></a>
                   </li>
                   <li>
-                    <a href="#thumbnail-images-cover" class="toc-h2 toc-link" data-title="thumbnail-images-code-cover-code">Thumbnail images <code>/cover</code></a>
+                    <a href="#thumbnail-images-get-cover" class="toc-h2 toc-link" data-title="thumbnail-images-code-get-cover-code">Thumbnail images <code>GET /cover</code></a>
+                  </li>
+                  <li>
+                    <a href="#toggle-favorite-status-get-fave" class="toc-h2 toc-link" data-title="toggle-favorite-status-code-get-fave-code">Toggle favorite status <code>GET /fave</code></a>
+                  </li>
+                  <li>
+                    <a href="#get-chapters-get-chapters" class="toc-h2 toc-link" data-title="get-chapters-code-get-chapters-code">Get chapters <code>GET /chapters</code></a>
+                  </li>
+                  <li>
+                    <a href="#get-manga-info-get-manga_info" class="toc-h2 toc-link" data-title="get-manga-info-code-get-manga_info-code">Get manga info <code>GET /manga_info</code></a>
+                  </li>
+                  <li>
+                    <a href="#get-chapter-page-count-get-page_count" class="toc-h2 toc-link" data-title="get-chapter-page-count-code-get-page_count-code">Get chapter page count <code>GET /page_count</code></a>
+                  </li>
+                  <li>
+                    <a href="#set-chapter-reading-status-get-reading_status" class="toc-h2 toc-link" data-title="set-chapter-reading-status-code-get-reading_status-code">Set chapter reading status <code>GET /reading_status</code></a>
                   </li>
               </ul>
           </li>
@@ -259,7 +274,7 @@
 <aside class="notice">
 Remember to replace all instances of <code>localhost:4567</code> in the code examples with whereever your server is actually running
 </aside>
-<h1 id='authentication-auth'>Authentication <code>/auth</code></h1>
+<h1 id='authentication-get-auth'>Authentication <code>GET /auth</code></h1>
 <blockquote>
 <p>To grab an authentication token, use this code:</p>
 </blockquote>
@@ -307,7 +322,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Remember to replace <code>5ujo4i8dvqj84jgt8picvh0sif</code> with your auth token!</p>
 </blockquote>
-<h2 id='verifying-auth-tokens-test_auth'>Verifying Auth Tokens <code>/test_auth</code></h2>
+<h2 id='verifying-auth-tokens-get-test_auth'>Verifying Auth Tokens <code>GET /test_auth</code></h2>
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
@@ -316,7 +331,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not currently implemented in the JavaScript client</span>
 </code></pre>
 <p>You can test auth tokens using this endpoint.</p>
-<h1 id='manga'>Manga</h1><h2 id='library-manga-library'>Library manga <code>/library</code></h2>
+<h1 id='manga'>Manga</h1><h2 id='library-manga-get-library'>Library manga <code>GET /library</code></h2>
 <blockquote>
 <p>Sample code to get manga in library:</p>
 </blockquote>
@@ -367,7 +382,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint fetches all manga in the user&#39;s library</p>
-<h2 id='thumbnail-images-cover'>Thumbnail images <code>/cover</code></h2>
+<h2 id='thumbnail-images-get-cover'>Thumbnail images <code>GET /cover</code></h2>
 <p>Use this endpoint to grab the thumbnail image of a manga</p>
 
 <blockquote>
@@ -391,6 +406,214 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Remember to replace <code>INTERNAL_ID_OF_MANGA</code> with the internal ID of the manga you wish to fetch the thumbnail of</p>
 </blockquote>
+<h2 id='toggle-favorite-status-get-fave'>Toggle favorite status <code>GET /fave</code></h2>
+<p>Use this endpoint to change the favorite status of a manga (whether or not it should be visible in the library).</p>
+
+<blockquote>
+<p>Code examples that favorite a manga</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+  -d <span class="s2">"fave=true"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Favorite</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Favorite status changed!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to change favorite status"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">fave</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Remember to replace <code>INTERNAL_ID_OF_MANGA</code> with the internal ID of the manga you wish to fetch the thumbnail of</p>
+</blockquote>
+<h3 id='query-parameters'>Query parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fave</td>
+<td>Boolean</td>
+<td>NONE</td>
+<td>no</td>
+<td>If set to true, manga will be favorited, otherwise manga will be un-favorited.</td>
+</tr>
+</tbody></table>
+<h2 id='get-chapters-get-chapters'>Get chapters <code>GET /chapters</code></h2>
+<p>Gets a list of a manga&#39;s chapters, sorted by the chapter number. Note that this response should be sorted according to the <code>SORT_TYPE</code> manga flag before being displayed to the user.</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Chapters</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get chapters!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">List</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">manga</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="mi">1430575817626</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">Milliseconds</span><span class="w"> </span><span class="err">since</span><span class="w"> </span><span class="err">epoch</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">added</span><span class="w">
+            </span><span class="s2">"source_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">301</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">Index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">(sorted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">order</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">displayed</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">source</span><span class="w"> </span><span class="err">page)</span><span class="w">
+            </span><span class="s2">"read"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                       </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">completely</span><span class="w"> </span><span class="err">read</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shokugeki no Soma - 0"</span><span class="p">,</span><span class="w">     </span><span class="err">//</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapter</span><span class="w">
+            </span><span class="s2">"chapter_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">Chapter</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">(extracted</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">name)</span><span class="w">
+            </span><span class="s2">"download_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_DOWNLOADED"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="s2">"DOWNLOADED"</span><span class="p">,</span><span class="w"> </span><span class="s2">"DOWNLOADING"</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="s2">"NOT_DOWNLOADED"</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">302</span><span class="p">,</span><span class="w">                           </span><span class="err">//</span><span class="w"> </span><span class="err">Internal</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapter</span><span class="w">
+            </span><span class="s2">"last_page_read"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">                  </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">last</span><span class="w"> </span><span class="err">page</span><span class="w"> </span><span class="err">read</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">(</span><span class="mi">0</span><span class="err">-indexed)</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="mi">1430575817626</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"source_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"read"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shokugeki no Soma - 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"chapter_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"download_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_DOWNLOADED"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">301</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"last_page_read"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="mi">1430575817626</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"source_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">299</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"read"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shokugeki no Soma - 2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"chapter_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"download_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_DOWNLOADED"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"last_page_read"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='get-manga-info-get-manga_info'>Get manga info <code>GET /manga_info</code></h2>
+<p>Gets a manga&#39;s info.</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">MangaInfo</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get manga info!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Same</span><span class="w"> </span><span class="err">format</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">objects</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">get</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="s2">"Get library"</span><span class="w"> </span><span class="err">endpoint</span><span class="w">
+        </span><span class="s2">"chapters"</span><span class="p">:</span><span class="w"> </span><span class="mi">302</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"artist"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAEKI Shun"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TSUKUDA Yuuto"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"flags"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"DISPLAY_MODE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NAME"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"READ_FILTER"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SORT_DIRECTION"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESCENDING"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SORT_TYPE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SOURCE"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DOWNLOADED_FILTER"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALL"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Yukihira Souma's dream is to become a full-time chef in his father's restaurant and surpass his father's culinary skill. But just as Yukihira graduates from middle schools his father, Yukihira Jouichirou, closes down the restaurant to cook in Europe. Although downtrodden, Souma's fighting spirit is rekindled by a challenge from Jouichirou which is to survive in an elite culinary school where only 10% of the students graduate. Can Souma survive?"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ReadMangaToday"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shokugeki no Soma"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"thumbnail_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.readmng.com/uploads/posters/1460123867.jpg"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"downloaded"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.readmng.com/shokugeki-no-soma"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"genres"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ecchi, Shounen"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"favorite"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unknown"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='get-chapter-page-count-get-page_count'>Get chapter page count <code>GET /page_count</code></h2>
+<p>Get the amount of pages in a chapter.</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">PageCount</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">page_count</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get page count!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">chapterId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_CHAPTER</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"page_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">46</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='set-chapter-reading-status-get-reading_status'>Set chapter reading status <code>GET /reading_status</code></h2>
+<p>Set the new reading status of a chapter.</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+  -d <span class="s2">"lp=8"</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+  -d <span class="s2">"lp=20"</span>
+  -d <span class="s2">"read=true"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">ReadingStatus</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to update reading status!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">chapterId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_CHAPTER</span><span class="p">,</span>
+    <span class="na">read</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">lastReadPage</span><span class="p">:</span> <span class="mi">8</span>
+<span class="p">});</span>
+</code></pre><h3 id='query-parameters-2'>Query parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>read</td>
+<td>Boolean</td>
+<td>NONE</td>
+<td>yes</td>
+<td>If true, manga will be set as &#39;read&#39;, if false manga will be set as &#39;unread&#39;, if null no changes will be made.</td>
+</tr>
+<tr>
+<td>lp (js: lastReadPage)</td>
+<td>Number</td>
+<td>NONE</td>
+<td>yes</td>
+<td>If non-null, update manga&#39;s last-read page to it, otherwise, no changes will be made.</td>
+</tr>
+</tbody></table>
 
 <!--
 ### HTTP Request
