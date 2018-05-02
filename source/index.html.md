@@ -91,7 +91,7 @@ You can test auth tokens using this endpoint.
 
 # Manga
 
-## Library manga `/library`
+## Library manga `GET /library`
 
 > Sample code to get manga in library:
 
@@ -149,7 +149,7 @@ TWApi.Commands.Library.execute(function(result) {
 
 This endpoint fetches all manga in the user's library
 
-## Thumbnail images `/cover`
+## Thumbnail images `GET /cover`
 
 Use this endpoint to grab the thumbnail image of a manga
 
@@ -176,23 +176,217 @@ TWApi.Commands.Cover.execute(null, function() {
 ```
 > Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga you wish to fetch the thumbnail of
 
-## Toggle favorite status `/fave`
+## Toggle favorite status `GET /fave`
 
 Use this endpoint to change the favorite status of a manga (whether or not it should be visible in the library).
+
+> Code examples that favorite a manga
 
 ```shell
 curl "http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA" -G
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
-  -d
+  -d "fave=true"
+```
+
+```javascript
+TWApi.Commands.Favorite.execute(function() {
+	console.log("Favorite status changed!");
+}, function() {
+    console.log("Failed to change favorite status");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+    fave: true
+});
 ```
 
 > Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga you wish to fetch the thumbnail of
 
 ### Query parameters
 
-| Parameter | Type    | Default | Description                                                                    |
-|-----------|---------|---------|--------------------------------------------------------------------------------|
-| fave      | Boolean | NONE    | If set to true, manga will be favorited, otherwise manga will be un-favorited. |
+| Parameter | Type    | Default | Optional | Description                                                                    |
+|-----------|---------|---------|----------|--------------------------------------------------------------------------------|
+| fave      | Boolean | NONE    | no       | If set to true, manga will be favorited, otherwise manga will be un-favorited. |
+
+## Get chapters `GET /chapters`
+
+Gets a list of a manga's chapters, sorted by the chapter number. Note that this response should be sorted according to the `SORT_TYPE` manga flag before being displayed to the user.
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.Chapters.execute(function(result) {
+	console.log(result.content);
+}, function() {
+    console.log("Failed to get chapters!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA
+});
+```
+
+> Example response:
+
+```json
+{
+	"success": true,
+	"content": [ // List of chapters in manga
+		{
+			"date": 1430575817626,               // Milliseconds since epoch of when chapter added
+			"source_order": 301,                 // Index of chapter (sorted by order it is displayed on source page)
+			"read": false,                       // Whether or not chapter is completely read
+			"name": "Shokugeki no Soma - 0",     // Name of chapter
+			"chapter_number": 0,                 // Chapter number (extracted from chapter name)
+			"download_status": "NOT_DOWNLOADED", // Whether or not chapter is "DOWNLOADED", "DOWNLOADING" or "NOT_DOWNLOADED"
+			"id": 302,                           // Internal ID of chapter
+			"last_page_read": 0                  // The last page read in the chapter (0-indexed)
+		},
+		{
+			"date": 1430575817626,
+			"source_order": 300,
+			"read": false,
+			"name": "Shokugeki no Soma - 1",
+			"chapter_number": 1,
+			"download_status": "NOT_DOWNLOADED",
+			"id": 301,
+			"last_page_read": 0
+		},
+		{
+			"date": 1430575817626,
+			"source_order": 299,
+			"read": false,
+			"name": "Shokugeki no Soma - 2",
+			"chapter_number": 2,
+			"download_status": "NOT_DOWNLOADED",
+			"id": 300,
+			"last_page_read": 0
+		}
+	]
+}
+```
+
+## Get manga info `GET /manga_info`
+
+Gets a manga's info.
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.MangaInfo.execute(function(result) {
+	console.log(result.content);
+}, function() {
+    console.log("Failed to get manga info!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA
+});
+```
+
+> Example response:
+
+```json
+{
+	"success": true,
+	"content": {  // Same format as the manga objects you get from the "Get library" endpoint
+		"chapters": 302,
+		"artist": "SAEKI Shun",
+		"author": "TSUKUDA Yuuto",
+		"flags": {
+			"DISPLAY_MODE": "NAME",
+			"READ_FILTER": "ALL",
+			"SORT_DIRECTION": "DESCENDING",
+			"SORT_TYPE": "SOURCE",
+			"DOWNLOADED_FILTER": "ALL"
+		},
+		"description": "Yukihira Souma's dream is to become a full-time chef in his father's restaurant and surpass his father's culinary skill. But just as Yukihira graduates from middle schools his father, Yukihira Jouichirou, closes down the restaurant to cook in Europe. Although downtrodden, Souma's fighting spirit is rekindled by a challenge from Jouichirou which is to survive in an elite culinary school where only 10% of the students graduate. Can Souma survive?",
+		"source": "ReadMangaToday",
+		"title": "Shokugeki no Soma",
+		"thumbnail_url": "https://www.readmng.com/uploads/posters/1460123867.jpg",
+		"downloaded": false,
+		"url": "https://www.readmng.com/shokugeki-no-soma",
+		"genres": "Ecchi, Shounen",
+		"id": 11,
+		"categories": [],
+		"favorite": true,
+		"status": "Unknown"
+	}
+}
+```
+
+## Get chapter page count `GET /page_count`
+
+Get the amount of pages in a chapter.
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.PageCount.execute(function(result) {
+	console.log(result.page_count);
+}, function() {
+    console.log("Failed to get page count!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+	chapterId: INTERNAL_ID_OF_CHAPTER
+});
+```
+
+> Example response:
+
+```json
+{
+	"success": true,
+	"page_count": 46
+}
+```
+
+## Set chapter reading status `GET /reading_status`
+
+Set the new reading status of a chapter.
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+  -d "lp=8"
+```
+
+```shell
+curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+  -d "lp=20"
+  -d "read=true"
+```
+
+```javascript
+TWApi.Commands.ReadingStatus.execute(null, function() {
+    console.log("Failed to update reading status!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+	chapterId: INTERNAL_ID_OF_CHAPTER,
+    read: true,
+    lastReadPage: 8
+});
+```
+
+### Query parameters
+
+| Parameter | Type    | Default | Optional | Description                                                                    |
+|-----------|---------|---------|----------|--------------------------------------------------------------------------------|
+| read      | Boolean | NONE    | yes       | If true, manga will be set as 'read', if false manga will be set as 'unread', if null no changes will be made. |
+| lp (js: lastReadPage)      | Number | NONE    | yes       | If non-null, update manga's last-read page to it, otherwise, no changes will be made. |
 
 <!--
 ### HTTP Request
