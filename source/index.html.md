@@ -470,8 +470,9 @@ TWApi.Commands.Update.execute(function(e) {
 
 ```json
 {
-	"removed": [],
-	"added": [    // WARNING! This returns chapters in a different format than the "Get chapters" endpoint. This will probably be changed soon.
+	"removed": [], // Chapters removed since last update
+                   // WARNING! This array (and the added array) contain chapters in a different format than the "Get chapters" endpoint. This will probably be changed soon.
+	"added": [     // Chapters added since last update
 		{
 			"bookmark": false,                     // Whether or not chapte bookmarked
 			"source_order": 0,                     // Index of chapter (sorted by order it is displayed on source page)
