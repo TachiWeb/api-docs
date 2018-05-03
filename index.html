@@ -260,6 +260,9 @@
                   <li>
                     <a href="#update-manga-get-update" class="toc-h2 toc-link" data-title="update-manga-code-get-update-code">Update manga <code>GET /update</code></a>
                   </li>
+                  <li>
+                    <a href="#chapter-page-images-get-img" class="toc-h2 toc-link" data-title="chapter-page-images-code-get-img-code">Chapter page images <code>GET /img</code></a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -274,7 +277,16 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
+        <!-- TODO
+Mention: TWApi.Commands.Image.buildUrl({
+            mangaId: mangaId,
+            chapterId: chapterId,
+            page: page
+        })
+        
+Describe JS client usages
+-->
+<h1 id='introduction'>Introduction</h1>
 <p>Welcome to the TachiWeb API! You can use the API to perform actions and get information on/from your Tachiyomi library.</p>
 
 <aside class="notice">
@@ -742,7 +754,29 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre><h2 id='chapter-page-images-get-img'>Chapter page images <code>GET /img</code></h2>
+<p>Use this endpoint to get a single image of a chapter</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/img/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER/0_INDEXED_PAGE_NUMBER"</span> <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Note that you do not need to use JS to fetch the image</span>
+<span class="c1">// Instead, just set the src attribute of an img element to:</span>
+<span class="c1">// http://localhost:4567/api/img/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER/0_INDEXED_PAGE_NUMBER</span>
+
+<span class="c1">// Code for those who still want to fetch the image manually:</span>
+<span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Image</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Could not fetch image!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">chapterId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_CHAPTER</span><span class="p">,</span>
+    <span class="na">page</span><span class="p">:</span> <span class="mi">0</span><span class="nx">_INDEXED_PAGE_NUMBER</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Process the raw XMLHttpRequest object here</span>
+<span class="p">});</span>
+</code></pre>
 <!--
 ### HTTP Request
 
