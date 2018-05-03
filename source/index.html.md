@@ -15,6 +15,16 @@ includes:
 search: true
 ---
 
+<!-- TODO
+Mention: TWApi.Commands.Image.buildUrl({
+            mangaId: mangaId,
+            chapterId: chapterId,
+            page: page
+        })
+        
+Describe JS client usages
+-->
+
 # Introduction
 
 Welcome to the TachiWeb API! You can use the API to perform actions and get information on/from your Tachiyomi library.
@@ -502,6 +512,34 @@ TWApi.Commands.Update.execute(function(e) {
 	],
 	"success": true
 }
+```
+
+## Chapter page images `GET /img`
+
+Use this endpoint to get a single image of a chapter
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/img/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER/0_INDEXED_PAGE_NUMBER" \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+// Note that you do not need to use JS to fetch the image
+// Instead, just set the src attribute of an img element to:
+// http://localhost:4567/api/img/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER/0_INDEXED_PAGE_NUMBER
+
+// Code for those who still want to fetch the image manually:
+TWApi.Commands.Image.execute(null, function() {
+    console.log("Could not fetch image!");
+}, {
+    mangaId: INTERNAL_ID_OF_MANGA,
+    chapterId: INTERNAL_ID_OF_CHAPTER,
+    page: 0_INDEXED_PAGE_NUMBER
+}, function(xhr) {
+    // Process the raw XMLHttpRequest object here
+});
 ```
 
 <!--
