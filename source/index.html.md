@@ -28,7 +28,7 @@ Remember to replace all instances of <code>localhost:4567</code> in the code exa
 > To grab an authentication token, use this code:
 
 ```shell
-curl "http://localhost:4567/api/auth" -G
+curl "http://localhost:4567/api/auth" -G \
   -d "password=YOUR_PASSWORD"
 ```
 
@@ -60,7 +60,7 @@ TachiWeb expects for the token to be included in all API requests to the server 
 > Example code that passes the authentication token:
 
 ```shell
-curl "http://localhost:4567/api/your-operation"
+curl "http://localhost:4567/api/your-operation" \
     -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -79,7 +79,7 @@ the resulting API key is automatically passed to the server on future queries.
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/test_auth"
+curl "http://localhost:4567/api/test_auth" \
     -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -96,7 +96,7 @@ You can test auth tokens using this endpoint.
 > Sample code to get manga in library:
 
 ```shell
-curl "http://localhost:4567/api/library"
+curl "http://localhost:4567/api/library" \
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -156,7 +156,7 @@ Use this endpoint to grab the thumbnail image of a manga
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA"
+curl "http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA" \
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -183,8 +183,8 @@ Use this endpoint to change the favorite status of a manga (whether or not it sh
 > Code examples that favorite a manga
 
 ```shell
-curl "http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA" -G
-  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+curl "http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif" \
   -d "fave=true"
 ```
 
@@ -199,7 +199,7 @@ TWApi.Commands.Favorite.execute(function() {
 });
 ```
 
-> Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga you wish to fetch the thumbnail of
+> Remember to replace `INTERNAL_ID_OF_MANGA` with the internal ID of the manga!
 
 ### Query parameters
 
@@ -214,7 +214,7 @@ Gets a list of a manga's chapters, sorted by the chapter number. Note that this 
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA" -G
+curl "http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA" -G \
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -275,7 +275,7 @@ Gets a manga's info.
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA" -G
+curl "http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA" -G \
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -294,7 +294,7 @@ TWApi.Commands.MangaInfo.execute(function(result) {
 ```json
 {
 	"success": true,
-	"content": {  // Same format as the manga objects you get from the "Get library" endpoint
+	"content": {  // Same format as the manga objects you get from the "Library manga" endpoint
 		"chapters": 302,
 		"artist": "SAEKI Shun",
 		"author": "TSUKUDA Yuuto",
@@ -327,7 +327,7 @@ Get the amount of pages in a chapter.
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
+curl "http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G \
   -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
 ```
 
@@ -358,15 +358,15 @@ Set the new reading status of a chapter.
 > Code examples:
 
 ```shell
-curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
-  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif" \
   -d "lp=8"
 ```
 
 ```shell
-curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G
-  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
-  -d "lp=20"
+curl "http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif" \
+  -d "lp=20" \
   -d "read=true"
 ```
 
@@ -387,6 +387,121 @@ TWApi.Commands.ReadingStatus.execute(null, function() {
 |-----------|---------|---------|----------|--------------------------------------------------------------------------------|
 | read      | Boolean | NONE    | yes       | If true, manga will be set as 'read', if false manga will be set as 'unread', if null no changes will be made. |
 | lp (js: lastReadPage)      | Number | NONE    | yes       | If non-null, update manga's last-read page to it, otherwise, no changes will be made. |
+
+## Set manga flag `GET /set_flag`
+
+Set a manga's flag.
+
+### Valid flag types
+
+| Name | Valid states    | Description                                                                    |
+|-----------|---------|--------------------------------------------------------------------------------|
+| `SORT_DIRECTION` | `DESCENDING`, `ASCENDING` | Sort chapters in descending or ascending order. |
+| `DISPLAY_MODE` | `NAME`, `NUMBER` | Display the chapter name or the chapter number? |
+| `READ_FILTER` | `READ`, `UNREAD`, `ALL` | Display only read, only unread or all chapters? |
+| `DOWNLOADED_FILTER` | `DOWNLOADED`, `NOT_DOWNLOADED`, `ALL` | Display only downloaded, only not downloaded or all chapters? |
+| `SORT_TYPE` | `SOURCE`, `NUMBER` | Sort by the order chapters are displayed on the source page or by their detected chapter numbers? |
+
+> Request format:
+
+```
+http://localhost:4567/api/set_flag/INTERNAL_ID_OF_MANGA/NAME_OF_FLAG/NEW_VALUE_OF_FLAG
+```
+
+> Example:
+
+```shell
+curl "http://localhost:4567/api/set_flag/11/SORT_TYPE/NUMBER" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.SetFlag.execute(null, function() {
+    console.log("Failed to set manga flag!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+    flag: "SORT_TYPE",
+    state: "NUMBER"
+});
+```
+
+## Update manga `GET /update`
+
+Update either manga info or manga chapters.
+
+Update type must be either: `INFO` or `CHAPTERS`.
+
+> Updating manga info:
+
+```shell
+curl "http://localhost:4567/api/update/INTERNAL_ID_OF_MANGA/INFO" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.Update.execute(null, function() {
+    console.log("Failed to update manga info!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+    updateType: "INFO"
+});
+``` 
+
+> Updating chapters:
+
+```shell
+curl "http://localhost:4567/api/update/INTERNAL_ID_OF_MANGA/CHAPTERS" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.Update.execute(function(e) {
+	console.log("Added chapters: ", e.added);
+	console.log("Removed chapters: ", e.removed);
+}, function() {
+    console.log("Failed to update manga chapters!");
+}, {
+	mangaId: INTERNAL_ID_OF_MANGA,
+    updateType: "CHAPTERS"
+});
+``` 
+
+> Example response (only applicable when updating chapters):
+
+```json
+{
+	"removed": [],
+	"added": [    // WARNING! This returns chapters in a different format than the "Get chapters" endpoint. This will probably be changed soon.
+		{
+			"bookmark": false,                     // Whether or not chapte bookmarked
+			"source_order": 0,                     // Index of chapter (sorted by order it is displayed on source page)
+			"read": false,                         // Whether or not chapter is completely read
+			"date_upload": 1522765444992,          // Milliseconds since epoch of when chapter uploaded to source
+			"recognizedNumber": true,              // Whether or not chapter number was able to be extracted from the chapter name
+			"chapter_number": 542,                 // Chapter number (extracted from chapter name)
+			"name": "The Ruler Of The Land - 542", // Name of chapter
+			"date_fetch": 1525357445660,           // Milliseconds since epoch of when chapter added to local database
+			"manga_id": 2,                         // Internal ID of manga
+			"last_page_read": 0,                   // The last page read in the chapter (0-indexed)
+			"url": "/the-ruler-of-the-land/542"    // The URL of the chapter in the source
+		},
+		{
+			"bookmark": false,
+			"source_order": 1,
+			"read": false,
+			"date_upload": 1522765444992,
+			"recognizedNumber": true,
+			"chapter_number": 541,
+			"name": "The Ruler Of The Land - 541",
+			"date_fetch": 1525357445659,
+			"manga_id": 2,
+			"last_page_read": 0,
+			"url": "/the-ruler-of-the-land/541"
+		}
+	],
+	"success": true
+}
+```
 
 <!--
 ### HTTP Request
