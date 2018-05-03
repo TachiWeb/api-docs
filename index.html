@@ -254,6 +254,12 @@
                   <li>
                     <a href="#set-chapter-reading-status-get-reading_status" class="toc-h2 toc-link" data-title="set-chapter-reading-status-code-get-reading_status-code">Set chapter reading status <code>GET /reading_status</code></a>
                   </li>
+                  <li>
+                    <a href="#set-manga-flag-get-set_flag" class="toc-h2 toc-link" data-title="set-manga-flag-code-get-set_flag-code">Set manga flag <code>GET /set_flag</code></a>
+                  </li>
+                  <li>
+                    <a href="#update-manga-get-update" class="toc-h2 toc-link" data-title="update-manga-code-get-update-code">Update manga <code>GET /update</code></a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -278,7 +284,7 @@ Remember to replace all instances of <code>localhost:4567</code> in the code exa
 <blockquote>
 <p>To grab an authentication token, use this code:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/auth"</span> -G
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/auth"</span> -G <span class="se">\</span>
   -d <span class="s2">"password=YOUR_PASSWORD"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Auth</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// You can actually just ignore the result, more on this later</span>
@@ -311,7 +317,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Example code that passes the authentication token:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/your-operation"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/your-operation"</span> <span class="se">\</span>
     -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">Do</span> <span class="nx">nothing</span><span class="o">!</span> <span class="nx">After</span> <span class="nx">you</span> <span class="nx">call</span><span class="p">:</span>
 
@@ -326,7 +332,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/test_auth"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/test_auth"</span> <span class="se">\</span>
     -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// Not currently implemented in the JavaScript client</span>
 </code></pre>
@@ -335,7 +341,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Sample code to get manga in library:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/library"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/library"</span> <span class="se">\</span>
   -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Library</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Result: "</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
@@ -388,7 +394,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/cover/INTERNAL_ID_OF_MANGA"</span> <span class="se">\</span>
   -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="c1">// It is not recommended you use JS to fetch the image</span>
 <span class="c1">// Instead, just set the src attribute of an img element to:</span>
@@ -412,8 +418,8 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples that favorite a manga</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA"</span> -G
-  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/fave/INTERNAL_ID_OF_MANGA"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span> <span class="se">\</span>
   -d <span class="s2">"fave=true"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Favorite</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Favorite status changed!"</span><span class="p">);</span>
@@ -425,7 +431,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <span class="p">});</span>
 </code></pre>
 <blockquote>
-<p>Remember to replace <code>INTERNAL_ID_OF_MANGA</code> with the internal ID of the manga you wish to fetch the thumbnail of</p>
+<p>Remember to replace <code>INTERNAL_ID_OF_MANGA</code> with the internal ID of the manga!</p>
 </blockquote>
 <h3 id='query-parameters'>Query parameters</h3>
 <table><thead>
@@ -451,7 +457,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA"</span> -G
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/chapters/INTERNAL_ID_OF_MANGA"</span> -G <span class="se">\</span>
   -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Chapters</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
@@ -505,7 +511,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA"</span> -G
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/manga_info/INTERNAL_ID_OF_MANGA"</span> -G <span class="se">\</span>
   -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">MangaInfo</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
@@ -520,7 +526,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Same</span><span class="w"> </span><span class="err">format</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">objects</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">get</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="s2">"Get library"</span><span class="w"> </span><span class="err">endpoint</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Same</span><span class="w"> </span><span class="err">format</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">manga</span><span class="w"> </span><span class="err">objects</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">get</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="s2">"Library manga"</span><span class="w"> </span><span class="err">endpoint</span><span class="w">
         </span><span class="s2">"chapters"</span><span class="p">:</span><span class="w"> </span><span class="mi">302</span><span class="p">,</span><span class="w">
         </span><span class="s2">"artist"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAEKI Shun"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TSUKUDA Yuuto"</span><span class="p">,</span><span class="w">
@@ -550,7 +556,7 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/page_count/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G <span class="se">\</span>
   -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">PageCount</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">page_count</span><span class="p">);</span>
@@ -574,12 +580,12 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <blockquote>
 <p>Code examples:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
-  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span> <span class="se">\</span>
   -d <span class="s2">"lp=8"</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G
-  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
-  -d <span class="s2">"lp=20"</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/reading_status/INTERNAL_ID_OF_MANGA/INTERNAL_ID_OF_CHAPTER"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span> <span class="se">\</span>
+  -d <span class="s2">"lp=20"</span> <span class="se">\</span>
   -d <span class="s2">"read=true"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">ReadingStatus</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to update reading status!"</span><span class="p">);</span>
@@ -614,7 +620,128 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <td>If non-null, update manga&#39;s last-read page to it, otherwise, no changes will be made.</td>
 </tr>
 </tbody></table>
+<h2 id='set-manga-flag-get-set_flag'>Set manga flag <code>GET /set_flag</code></h2>
+<p>Set a manga&#39;s flag.</p>
+<h3 id='valid-flag-types'>Valid flag types</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Valid states</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>SORT_DIRECTION</code></td>
+<td><code>DESCENDING</code>, <code>ASCENDING</code></td>
+<td>Sort chapters in descending or ascending order.</td>
+</tr>
+<tr>
+<td><code>DISPLAY_MODE</code></td>
+<td><code>NAME</code>, <code>NUMBER</code></td>
+<td>Display the chapter name or the chapter number?</td>
+</tr>
+<tr>
+<td><code>READ_FILTER</code></td>
+<td><code>READ</code>, <code>UNREAD</code>, <code>ALL</code></td>
+<td>Display only read, only unread or all chapters?</td>
+</tr>
+<tr>
+<td><code>DOWNLOADED_FILTER</code></td>
+<td><code>DOWNLOADED</code>, <code>NOT_DOWNLOADED</code>, <code>ALL</code></td>
+<td>Display only downloaded, only not downloaded or all chapters?</td>
+</tr>
+<tr>
+<td><code>SORT_TYPE</code></td>
+<td><code>SOURCE</code>, <code>NUMBER</code></td>
+<td>Sort by the order chapters are displayed on the source page or by their detected chapter numbers?</td>
+</tr>
+</tbody></table>
 
+<blockquote>
+<p>Request format:</p>
+</blockquote>
+<pre class="highlight plaintext"><code>http://localhost:4567/api/set_flag/INTERNAL_ID_OF_MANGA/NAME_OF_FLAG/NEW_VALUE_OF_FLAG
+</code></pre>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/set_flag/11/SORT_TYPE/NUMBER"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">SetFlag</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to set manga flag!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">flag</span><span class="p">:</span> <span class="s2">"SORT_TYPE"</span><span class="p">,</span>
+    <span class="na">state</span><span class="p">:</span> <span class="s2">"NUMBER"</span>
+<span class="p">});</span>
+</code></pre><h2 id='update-manga-get-update'>Update manga <code>GET /update</code></h2>
+<p>Update either manga info or manga chapters.</p>
+
+<p>Update type must be either: <code>INFO</code> or <code>CHAPTERS</code>.</p>
+
+<blockquote>
+<p>Updating manga info:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/update/INTERNAL_ID_OF_MANGA/INFO"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Update</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to update manga info!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">updateType</span><span class="p">:</span> <span class="s2">"INFO"</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Updating chapters:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/update/INTERNAL_ID_OF_MANGA/CHAPTERS"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Update</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Added chapters: "</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">added</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Removed chapters: "</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">removed</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to update manga chapters!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">mangaId</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_MANGA</span><span class="p">,</span>
+    <span class="na">updateType</span><span class="p">:</span> <span class="s2">"CHAPTERS"</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example response (only applicable when updating chapters):</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"removed"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"added"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">    </span><span class="err">//</span><span class="w"> </span><span class="err">WARNING!</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">returns</span><span class="w"> </span><span class="err">chapters</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">different</span><span class="w"> </span><span class="err">format</span><span class="w"> </span><span class="err">than</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="s2">"Get chapters"</span><span class="w"> </span><span class="err">endpoint.</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">probably</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">changed</span><span class="w"> </span><span class="err">soon.</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"bookmark"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">chapte</span><span class="w"> </span><span class="err">bookmarked</span><span class="w">
+            </span><span class="s2">"source_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">Index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">(sorted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">order</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">displayed</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">source</span><span class="w"> </span><span class="err">page)</span><span class="w">
+            </span><span class="s2">"read"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">                         </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">completely</span><span class="w"> </span><span class="err">read</span><span class="w">
+            </span><span class="s2">"date_upload"</span><span class="p">:</span><span class="w"> </span><span class="mi">1522765444992</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">Milliseconds</span><span class="w"> </span><span class="err">since</span><span class="w"> </span><span class="err">epoch</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">uploaded</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">source</span><span class="w">
+            </span><span class="s2">"recognizedNumber"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">              </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">was</span><span class="w"> </span><span class="err">able</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">extracted</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">name</span><span class="w">
+            </span><span class="s2">"chapter_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">542</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">Chapter</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">(extracted</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">name)</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Ruler Of The Land - 542"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">chapter</span><span class="w">
+            </span><span class="s2">"date_fetch"</span><span class="p">:</span><span class="w"> </span><span class="mi">1525357445660</span><span class="p">,</span><span class="w">           </span><span class="err">//</span><span class="w"> </span><span class="err">Milliseconds</span><span class="w"> </span><span class="err">since</span><span class="w"> </span><span class="err">epoch</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">added</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">local</span><span class="w"> </span><span class="err">database</span><span class="w">
+            </span><span class="s2">"manga_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">                         </span><span class="err">//</span><span class="w"> </span><span class="err">Internal</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">manga</span><span class="w">
+            </span><span class="s2">"last_page_read"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                   </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">last</span><span class="w"> </span><span class="err">page</span><span class="w"> </span><span class="err">read</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">(</span><span class="mi">0</span><span class="err">-indexed)</span><span class="w">
+            </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/the-ruler-of-the-land/542"</span><span class="w">    </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">URL</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">chapter</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">source</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"bookmark"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"source_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"read"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"date_upload"</span><span class="p">:</span><span class="w"> </span><span class="mi">1522765444992</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"recognizedNumber"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"chapter_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">541</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Ruler Of The Land - 541"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"date_fetch"</span><span class="p">:</span><span class="w"> </span><span class="mi">1525357445659</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"manga_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"last_page_read"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/the-ruler-of-the-land/541"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <!--
 ### HTTP Request
 
