@@ -572,6 +572,7 @@ TWApi.Commands.Sources.execute(function(result) {
 ```
 
 > Example response:
+
 ```json
 {
 	"success": true,
@@ -620,6 +621,7 @@ TWApi.Commands.GetFilters.execute(function(result) {
 ```
 
 > Example response:
+
 ```json
 {
 	"success": true,
