@@ -266,6 +266,17 @@
               </ul>
           </li>
           <li>
+            <a href="#catalogues" class="toc-h1 toc-link" data-title="catalogues">Catalogues</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#list-sources-get-sources" class="toc-h2 toc-link" data-title="list-sources-code-get-sources-code">List sources <code>GET /sources</code></a>
+                  </li>
+                  <li>
+                    <a href="#get-filters-get-get_filters" class="toc-h2 toc-link" data-title="get-filters-code-get-get_filters-code">Get filters <code>GET /get_filters</code></a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="errors">Errors</a>
           </li>
       </div>
@@ -776,7 +787,200 @@ Authentication tokens <b>regularly</b> expire (without notice)! Always ensure th
 <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Process the raw XMLHttpRequest object here</span>
 <span class="p">});</span>
+</code></pre><h1 id='catalogues'>Catalogues</h1><h2 id='list-sources-get-sources'>List sources <code>GET /sources</code></h2>
+<p>An endpoint used to list installed sources.</p>
+<h3 id='query-parameters-3'>Query parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>enabled</td>
+<td>Boolean</td>
+<td>false</td>
+<td>yes</td>
+<td>If true, will only return enabled sources, otherwise will return all installed sources.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/sources"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span> <span class="se">\</span>
+  -d <span class="s2">"enabled=true"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">Sources</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get enabled sources!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">enabled</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
 </code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">List</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">sources</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Local manga"</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">source</span><span class="w">
+            </span><span class="s2">"supports_latest"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Whether</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">source</span><span class="w"> </span><span class="err">supports</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">latest</span><span class="w"> </span><span class="err">updates</span><span class="w"> </span><span class="err">screen</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">Internal</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">source</span><span class="w">
+            </span><span class="s2">"lang"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">                </span><span class="err">//</span><span class="w"> </span><span class="err">Language</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">source</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">ISO</span><span class="w"> </span><span class="mi">639-1</span><span class="w"> </span><span class="err">country</span><span class="w"> </span><span class="err">code</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">language</span><span class="w">
+                </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">language</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">language</span><span class="w"> </span><span class="err">itself)</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mangahere"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"supports_latest"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"lang"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"English"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='get-filters-get-get_filters'>Get filters <code>GET /get_filters</code></h2>
+<p>Call this endpoint to grab a list of available filters for a source.</p>
+
+<blockquote>
+<p>Code examples:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://localhost:4567/api/get_filters/INTERNAL_ID_OF_SOURCE"</span> -G <span class="se">\</span>
+  -H <span class="s2">"TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">TWApi</span><span class="p">.</span><span class="nx">Commands</span><span class="p">.</span><span class="nx">GetFilters</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Failed to get filters!"</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="nx">INTERNAL_ID_OF_SOURCE</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">List</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">filters</span><span class="w"> </span><span class="err">(MUST</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">rendered</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">order</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">page)</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">Data</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">what</span><span class="w"> </span><span class="err">Java</span><span class="w"> </span><span class="err">types</span><span class="w"> </span><span class="err">each</span><span class="w"> </span><span class="err">JSON</span><span class="w"> </span><span class="err">field</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">internal</span><span class="w"> </span><span class="err">use.</span><span class="w"> 
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">DO</span><span class="w"> </span><span class="err">NOT</span><span class="w"> </span><span class="err">USE</span><span class="w"> </span><span class="err">THIS</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">removed/changed</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">any</span><span class="w"> </span><span class="err">time</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">without</span><span class="w"> </span><span class="err">warning.</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">MUST</span><span class="w"> </span><span class="err">NOT</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">modified</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">MUST</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">retained</span><span class="w"> </span><span class="err">when</span><span class="w"> </span><span class="err">calling</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">search</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filters</span><span class="w"> </span><span class="err">JSON.</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="p">:</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">'name'</span><span class="w"> </span><span class="err">field</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">Java</span><span class="w"> </span><span class="err">String</span><span class="w"> </span><span class="err">type</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lorem ipsum"</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">header</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HEADER"</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">type</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">HEADER</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">single</span><span class="w"> </span><span class="err">line</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">non-editable</span><span class="w"> </span><span class="err">text</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">provide</span><span class="w"> </span><span class="err">information</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">user</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">Should</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">ignored</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">separator</span><span class="w"> </span><span class="err">filters</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SEPARATOR"</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">SEPARATOR</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">horizontal</span><span class="w"> </span><span class="err">line</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">divide</span><span class="w"> </span><span class="err">two</span><span class="w"> </span><span class="err">sections</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">filters</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.Boolean"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Show R-18"</span><span class="p">,</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">                  </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">initial</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHECKBOX"</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">CHECKBOX</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">two-state</span><span class="p">,</span><span class="w"> </span><span class="err">toggleable</span><span class="w"> </span><span class="err">filter</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Author"</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">                    </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">initial</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TEXT"</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">TEXT</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">single-line</span><span class="p">,</span><span class="w"> </span><span class="err">editable</span><span class="w"> </span><span class="err">text</span><span class="w"> </span><span class="err">filter</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">possible</span><span class="w"> </span><span class="err">values</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+                </span><span class="s2">"All"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Japanese Manga"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Korean Manhwa"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Chinese Manhua"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.Integer"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Type"</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">initial</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SELECT"</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">SELECT</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">drop-down</span><span class="p">,</span><span class="w"> </span><span class="err">single-selection</span><span class="w"> </span><span class="err">filter</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">One</span><span class="w"> </span><span class="err">(no</span><span class="w"> </span><span class="err">more</span><span class="p">,</span><span class="w"> </span><span class="err">no</span><span class="w"> </span><span class="err">less)</span><span class="w"> </span><span class="err">item</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">selected</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">time</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">It's</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">index</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">selected</span><span class="w"> </span><span class="err">item</span><span class="w"> </span><span class="err">(</span><span class="mi">0</span><span class="err">-indexed)</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.Integer"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Completed"</span><span class="p">,</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">initial</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRISTATE"</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">TRISTATE</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">triple-state</span><span class="w"> </span><span class="err">filter</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">Users</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">cycle</span><span class="w"> </span><span class="err">through</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">three</span><span class="w"> </span><span class="err">states</span><span class="p">:</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">+-------+---------+</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">Index</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">State</span><span class="w">   </span><span class="err">|</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">+-------+---------+</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="err">|</span><span class="w"> </span><span class="err">IGNORE</span><span class="w">  </span><span class="err">|</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">1</span><span class="w">     </span><span class="err">|</span><span class="w"> </span><span class="err">INCLUDE</span><span class="w"> </span><span class="err">|</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">2</span><span class="w">     </span><span class="err">|</span><span class="w"> </span><span class="err">EXCLUDE</span><span class="w"> </span><span class="err">|</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">+-------+---------+</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.Integer"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRISTATE"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Genres"</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">group</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GROUP"</span><span class="w">                </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">GROUP</span><span class="w"> </span><span class="err">filter</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">group</span><span class="w"> </span><span class="err">multiple</span><span class="w"> </span><span class="err">filters</span><span class="w"> </span><span class="err">together</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">Although</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">groups</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">currently</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">used</span><span class="p">,</span><span class="w"> </span><span class="err">they</span><span class="w"> </span><span class="err">may</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">supported</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">future</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">different</span><span class="w"> </span><span class="err">attributes</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">sort</span><span class="w"> </span><span class="err">by</span><span class="w">
+                </span><span class="s2">"Series name"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Rating"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Views"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Total chapters"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Last chapter"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">                      </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">initial</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filter</span><span class="w">
+                </span><span class="s2">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">attribute</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">sorting</span><span class="w"> </span><span class="err">by</span><span class="w">
+                </span><span class="s2">"ascending"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">Are</span><span class="w"> </span><span class="err">we</span><span class="w"> </span><span class="err">sorting</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">attribute</span><span class="w"> </span><span class="err">ascending</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">descending?</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"_cmaps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"java.lang.String"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Order by"</span><span class="p">,</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">name</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">filters</span><span class="w">
+            </span><span class="s2">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SORT"</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">SORT</span><span class="w"> </span><span class="err">filters</span><span class="w"> </span><span class="err">allows</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">user</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">sort</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">one</span><span class="w"> </span><span class="err">(no</span><span class="w"> </span><span class="err">more</span><span class="p">,</span><span class="w"> </span><span class="err">no</span><span class="w"> </span><span class="err">less)</span><span class="w"> </span><span class="err">specific</span><span class="w"> </span><span class="err">attribute</span><span class="w">
+                                            </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">attribute</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">sorted</span><span class="w"> </span><span class="err">ascending</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">descending</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <!--
 ### HTTP Request
 
