@@ -542,6 +542,200 @@ TWApi.Commands.Image.execute(null, function() {
 });
 ```
 
+# Catalogues
+## List sources `GET /sources`
+
+An endpoint used to list installed sources.
+
+### Query parameters
+
+| Parameter | Type    | Default | Optional | Description                                                                    |
+|-----------|---------|---------|----------|--------------------------------------------------------------------------------|
+| enabled   | Boolean | false    | yes       | If true, will only return enabled sources, otherwise will return all installed sources. |
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/sources" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif" \
+  -d "enabled=true"
+```
+
+```javascript
+TWApi.Commands.Sources.execute(function(result) {
+	console.log(result.content);
+}, function() {
+    console.log("Failed to get enabled sources!");
+}, {
+	enabled: true
+});
+```
+
+> Example response:
+```json
+{
+	"success": true,
+	"content": [  // List of sources
+		{
+			"name": "Local manga",   // Name of source
+			"supports_latest": true, // Whether or not the source supports the latest updates screen
+			"id": 0,                 // Internal ID of source
+			"lang": {                // Language of source
+				"name": "",          // ISO 639-1 country code of language
+				"display_name": ""   // Name of language (in the language itself)
+			}
+		},
+		{
+			"name": "Mangahere",
+			"supports_latest": true,
+			"id": 2,
+			"lang": {
+				"name": "en",
+				"display_name": "English"
+			}
+		}
+	]
+}
+```
+
+## Get filters `GET /get_filters`
+
+Call this endpoint to grab a list of available filters for a source.
+
+> Code examples:
+
+```shell
+curl "http://localhost:4567/api/get_filters/INTERNAL_ID_OF_SOURCE" -G \
+  -H "TW-Session: 5ujo4i8dvqj84jgt8picvh0sif"
+```
+
+```javascript
+TWApi.Commands.GetFilters.execute(function(result) {
+	console.log(result.content);
+}, function() {
+    console.log("Failed to get filters!");
+}, {
+	id: INTERNAL_ID_OF_SOURCE
+});
+```
+
+> Example response:
+```json
+{
+	"success": true,
+	"content": [  // List of filters (MUST be rendered in order on the page)
+		{
+			"_cmaps": {                     // Data on what Java types each JSON field is for internal use. 
+                                            // DO NOT USE THIS as it can be removed/changed at any time
+                                            // without warning.
+                                            // This data MUST NOT be modified and MUST be retained when calling the search API with the filters JSON.
+				"name": "java.lang.String"  // Example: The 'name' field is a Java String type
+			},
+			"name": "Lorem ipsum",          // The name of the header
+			"_type": "HEADER"               // The type of the filter
+                                            // The HEADER filter is a single line of non-editable text used to provide information to the user
+		},
+		{
+			"_cmaps": {
+				"name": "java.lang.String"
+			},
+			"name": "",                     // Should be ignored in separator filters
+			"_type": "SEPARATOR"            // The SEPARATOR filter is a horizontal line used to divide two sections of filters
+		},
+		{
+			"_cmaps": {
+				"name": "java.lang.String",
+				"state": "java.lang.Boolean"
+			},
+			"name": "Show R-18",            // The name of the filter
+			"state": true,                  // The initial state of the filter
+			"_type": "CHECKBOX"             // The CHECKBOX filter is a two-state, toggleable filter
+		},
+		{
+			"_cmaps": {
+				"name": "java.lang.String",
+				"state": "java.lang.String"
+			},
+			"name": "Author",               // The name of the filter
+			"state": "",                    // The initial state of the filter
+			"_type": "TEXT"                 // The TEXT filter is a single-line, editable text filter
+		},
+		{
+			"values": [                     // All possible values of the filter
+				"All",
+				"Japanese Manga",
+				"Korean Manhwa",
+				"Chinese Manhua"
+			],
+			"_cmaps": {
+				"name": "java.lang.String",
+				"state": "java.lang.Integer"
+			},
+			"name": "Type",                 // The name of the filter
+			"state": 0,                     // The initial state of the filter
+			"_type": "SELECT"               // The SELECT filter is a drop-down, single-selection filter
+                                            // One (no more, no less) item can be selected at a time
+                                            // It's state is the index of the selected item (0-indexed)
+		},
+		{
+			"_cmaps": {
+				"name": "java.lang.String",
+				"state": "java.lang.Integer"
+			},
+			"name": "Completed",            // The name of the filter
+			"state": 0,                     // The initial state of the filter
+			"_type": "TRISTATE"             // The TRISTATE filter is a triple-state filter
+                                            // Users can cycle through the three states:
+                                            // +-------+---------+
+                                            // | Index | State   |
+                                            // +-------+---------+
+                                            // | 0     | IGNORE  |
+                                            // | 1     | INCLUDE |
+                                            // | 2     | EXCLUDE |
+                                            // +-------+---------+
+		},
+		{
+			"state": [
+				{
+					"_cmaps": {
+						"name": "java.lang.String",
+						"state": "java.lang.Integer"
+					},
+					"name": "Action",
+					"state": 0,
+					"_type": "TRISTATE"
+				}
+			],
+			"_cmaps": {
+				"name": "java.lang.String"
+			},
+			"name": "Genres",               // The name of the group
+			"_type": "GROUP"                // The GROUP filter is used to group multiple filters together
+                                            // Although nested groups are currently not used, they may be supported in the future
+		},
+		{
+			"values": [                     // All the different attributes we can sort by
+				"Series name",
+				"Rating",
+				"Views",
+				"Total chapters",
+				"Last chapter"
+			],
+			"state": {                      // The initial state of the filter
+				"index": 2,                 // The current attribute we are sorting by
+				"ascending": false          // Are we sorting the attribute ascending or descending?
+			},
+			"_cmaps": {
+				"name": "java.lang.String"
+			},
+			"name": "Order by",             // The name of the filters
+			"_type": "SORT"                 // The SORT filters allows the user to sort by one (no more, no less) specific attribute
+                                            // The attribute can be sorted ascending or descending
+		}
+	]
+}
+```
+
 <!--
 ### HTTP Request
 
